@@ -10,6 +10,7 @@ var pluck = require('whisk/pluck');
 var pluckCandidate = pluck('candidate', 'sdpMid', 'sdpMLineIndex');
 var CLOSED_STATES = [ 'closed', 'failed' ];
 var CHECKING_STATES = [ 'checking' ];
+var renegotiations = {};
 
 /**
   ### rtc-tools/couple
@@ -136,8 +137,10 @@ function couple(pc, targetId, signaller, opts) {
       // from the same source. By passing `allowReactiveInterop` you can reallow this, then use the `filtersdp` option
       // to provide a munged SDP that might be able to work
       return signaller.to(targetId).send('/negotiate', {
-        requestOfferer: (allowReactiveInterop) && renegotiateRequired
+        requestOfferer: (allowReactiveInterop) && renegotiateRequired && !renegotiations[targetId]
       });
+      
+      renegotiations[targetId] = true;
     }
 
     debug('[' + signaller.id + '] Creating new offer for ' + targetId);
