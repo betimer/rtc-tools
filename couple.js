@@ -90,7 +90,6 @@ function couple(pc, targetId, signaller, opts) {
   var renegotiateRequired = false;
   var creatingOffer = false;
   var awaitingAnswer = false;
-  var interoperating = false;
 
   /**
     Indicates whether this peer connection is in a state where it is able to have new offers created
@@ -231,7 +230,6 @@ function couple(pc, targetId, signaller, opts) {
     debug('[' + signaller.id + '] ' + targetId + ' is ready for coupling');
     targetReady = true;
     targetInfo = src.data;
-    interoperating = (targetInfo.browser !== signaller.attributes.browser);
     emit('target.ready');
   }
 
