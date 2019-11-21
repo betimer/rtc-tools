@@ -136,11 +136,14 @@ function couple(pc, targetId, signaller, opts) {
       // Chrome and Firefox created offers by default client offers are disabled to ensure that all offers are coming
       // from the same source. By passing `allowReactiveInterop` you can reallow this, then use the `filtersdp` option
       // to provide a munged SDP that might be able to work
+      
+      var isRequestOfferer = (allowReactiveInterop) && renegotiateRequired && !renegotiations[targetId];
+      renegotiations[targetId] = true;
+      
       return signaller.to(targetId).send('/negotiate', {
-        requestOfferer: (allowReactiveInterop) && renegotiateRequired && !renegotiations[targetId]
+        requestOfferer: isRequestOfferer
       });
       
-      renegotiations[targetId] = true;
     }
 
     debug('[' + signaller.id + '] Creating new offer for ' + targetId);
