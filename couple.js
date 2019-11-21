@@ -137,7 +137,7 @@ function couple(pc, targetId, signaller, opts) {
       // from the same source. By passing `allowReactiveInterop` you can reallow this, then use the `filtersdp` option
       // to provide a munged SDP that might be able to work
       return signaller.to(targetId).send('/negotiate', {
-        requestOfferer: (allowReactiveInterop || !interoperating) && renegotiateRequired
+        requestOfferer: (allowReactiveInterop) && renegotiateRequired
       });
     }
 
