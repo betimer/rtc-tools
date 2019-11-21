@@ -141,7 +141,7 @@ function couple(pc, targetId, signaller, opts) {
       renegotiations[targetId] = true;
       
       return signaller.to(targetId).send('/negotiate', {
-        requestOfferer: renegotiateRequired
+        requestOfferer: false
       });
       
     }
